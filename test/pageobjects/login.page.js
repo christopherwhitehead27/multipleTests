@@ -1,5 +1,6 @@
 import { $ } from '@wdio/globals'
 import Page from './page.js';
+import SecurePage from './products.page.js';
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -32,6 +33,9 @@ class LoginPage extends Page {
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
         await this.btnSubmit.click();
+        await expect(SecurePage.appLogo).toBeExisting()
+        await expect(SecurePage.appLogo).toHaveText(
+            expect.stringContaining('Swag Labs'))
     }
 
     /**
