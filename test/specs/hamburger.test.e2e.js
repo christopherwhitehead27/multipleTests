@@ -13,11 +13,11 @@ describe('Hamburger menu test', () => {
         await LoginPage.login('standard_user', 'secret_sauce')
         await ProductsPage.testAllItems()
     })
-    // it('About menu item should link to saucelabs.com', async () => {
-    //     await LoginPage.open()
-    //     await LoginPage.login('standard_user', 'secret_sauce')
-    //     await ProductsPage.clickAbout()
-    // })
+    it('About menu item should link to saucelabs.com', async () => {
+        await LoginPage.open()
+        await LoginPage.login('standard_user', 'secret_sauce')
+        await ProductsPage.clickAbout()
+    })
     it('Logout menu item should log user out and return to login page', async () => {
         await LoginPage.open()
         await LoginPage.login('standard_user', 'secret_sauce')

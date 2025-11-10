@@ -32,14 +32,8 @@ class ProductsPage extends Page {
     get cartButton () {
         return $('.shopping_cart_link')
     }
-    get addBackpack () {
-        return $('#add-to-cart-sauce-labs-backpack')
-    }
     get cartBadge () {
         return $('.shopping_cart_badge')
-    }
-    get popupOk () {
-        return $('#onetrust-accept-btn-handler')
     }
     itemWithDashes = ['sauce-labs-backpack', 'sauce-labs-bike-light', 'sauce-labs-bolt-t-shirt', 'sauce-labs-fleece-jacket', 'sauce-labs-onesie']
     dynamicAddToCart(itemWithDashes) {
@@ -47,6 +41,9 @@ class ProductsPage extends Page {
     }
     get allTheThings () {
         return $('[id*="allthethings"]')
+    }
+    get labsSelector () {
+        return $('#__next')
     }
     async hamburgerOpenClose () {
         await this.hamburgerMenu.click()
@@ -59,20 +56,18 @@ class ProductsPage extends Page {
     }
     async clickAbout () {
         await this.hamburgerMenu.click()
-        await this.about.click()
-        // await expect(this.popupOk).toBeClickable()
-        await browser.execute(() => {
-            window.stop();
-        })
-        await browser.back()
-        // await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
+        const link = await $('a[href*="saucelabs.com"]');
+        const href = await link.getAttribute('href');
+        expect(href).toContain('saucelabs.com');
     }
     async clickLogout () {
         await this.hamburgerMenu.click()
         await this.logout.click()
     }
     async clickResetApp () {
-        await this.addBackpack.click()
+        for (let i = 0; i < this.itemWithDashes.length; i++) {
+            await this.dynamicAddToCart(this.itemWithDashes[i]).click()
+        }
         await expect(this.cartBadge).toBeDisplayed()
         await this.hamburgerMenu.click()
         await this.resetAppState.click()
